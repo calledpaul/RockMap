@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1; maximum-scale=1; user-scalable=no, width=device-width, height=device-height" />
+		<script type="text/javascript" src="svg.min.js"></script>
+		<script type="text/javascript" src="svg.touch.js"></script>
+		<script type="text/javascript" src="hammer.min.js"></script>
+		
+		<script type="text/javascript" src="hammer.fakemultitouch.js"></script>
+		<script type="text/javascript" src="hammer.showtouches.js"></script>
+
+		<script type="text/javascript" src="pointsalpha.js"></script>
+		<script type="text/javascript" src="graph.js"></script>
+		<script type="text/javascript" src="pathfinder.js"></script>		
+		<!-- <script src="http://jsconsole.com/remote.js?737CE9E4-F5B1-46F9-A51B-894D36C177E8"></script> -->
+	</head>
+	<body style="padding:0;margin:0;">
+		<div id="container" style="padding:0;margin:0;overflow: hidden; width:100%; height:100%;"></div>
+		<script>
+			Hammer.plugins.fakeMultitouch();
+			Hammer.plugins.showTouches();			
+
+			var initPathfinder = function() { 
+				var pf = new pathFinder().init(profile, 'container');
+				window.pf = pf;
+				pf.startNavigation(121);
+
+
+				pf.drawGroup.click(function(evt){			
+					var p = pf.cursorPoint(evt);
+					pf.geoPos = pf.convertPxToGeo(p.x, p.y);
+					//pf.simulate();
+				});
+				var p = pf.cursorPoint(null, 100, 100);
+				pf.geoPos = pf.convertPxToGeo(p.x, p.y);
+				pf.simulate();
+			};
+
+			window.onload = initPathfinder;		
+		</script>
+	</body>
+</html>
